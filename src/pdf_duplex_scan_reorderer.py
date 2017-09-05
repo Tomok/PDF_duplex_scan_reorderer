@@ -1,3 +1,5 @@
+import math
+from itertools import zip_longest
 from typing import Iterator
 
 from PyPDF2 import PdfFileReader, PdfFileWriter
@@ -28,9 +30,13 @@ def gen_page_order(page_cnt: int):
     :return: iterator of page numbers belonging to the old document (starting with 0),
         yields in order they should be in the new document
     """
-    front_pages = range(0, page_cnt // 2)
-    back_pages = range(page_cnt - 1, page_cnt // 2 - 1, -1)
-    pages_ordered = flat_zip(front_pages, back_pages)
+    # use int() to convert float, since we need int any way
+    last_front_page = int(math.ceil(page_cnt / 2))
+    front_pages = range(0, last_front_page)
+    back_pages = range(page_cnt - 1, last_front_page - 1, -1)
+    # front_pages could have a different amount of elements in case of odd page number
+    # so use zip_longest and ignore None
+    pages_ordered = (x for x in flat_zip(front_pages, back_pages, zip_function=zip_longest) if x is not None)
     return pages_ordered
 
 
