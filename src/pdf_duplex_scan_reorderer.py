@@ -4,9 +4,6 @@ from typing import Iterator
 
 from PyPDF2 import PdfFileReader, PdfFileWriter
 
-INPUT_FILE = "./Input.pdf"
-OUTPUT_FILE = "./Output.pdf"
-
 
 def flat_zip(*iterators: Iterator, zip_function=zip):
     """
@@ -40,17 +37,46 @@ def gen_page_order(page_cnt: int):
     return pages_ordered
 
 
-def main():
-    """ main function """
-    with open(INPUT_FILE, "rb") as readfile:
+def reorder_pdf(input_filename: str, output_filename: str):
+    """
+    Reorders pages in a PDF:
+        it assumes you scanned front pages first and than the back pages in inverse order
+        (as you would if you just flipped the stack of paper).
+
+        In case of an odd page number, it assumes, the last page does not have a (scanned) back side
+    :param input_filename: name of the pdf to reorder
+    :param output_filename: filename of the file to save the reordered pdf to
+    """
+    with open(input_filename, "rb") as readfile:
         input_pdf = PdfFileReader(readfile)
         page_cnt = input_pdf.getNumPages()
         pages_ordered = gen_page_order(page_cnt)
-        with open(OUTPUT_FILE, "wb") as writefile:
+        with open(output_filename, "wb") as writefile:
             output_pdf = PdfFileWriter()
             for page_no in pages_ordered:
                 output_pdf.addPage(input_pdf.getPage(page_no))
             output_pdf.write(writefile)
+
+
+def parse_args(args=None):
+    import argparse
+    parser = argparse.ArgumentParser(description="""
+        Reorders pages in a PDF: 
+            it assumes you scanned front pages first and than the back pages in inverse order
+            (as you would if you just flipped the stack of paper).
+
+            In case of an odd page number, it assumes, the last page does not have a (scanned) back side""")
+    parser.add_argument("input", help="Name of PDF to reorder")
+    parser.add_argument("output", help="Name of file to save the reordered pdf to")
+    args = parser.parse_args(args)
+    return args
+
+
+def main():
+    """ main function """
+    args = parse_args()
+
+    reorder_pdf(input_filename=args.input, output_filename=args.output)
 
 
 if __name__ == '__main__':
