@@ -5,7 +5,15 @@ python:
 
 install:
   - pip install -r requirements.txt
+  - pip install coverage==4.3 #codeclimate test reporter does not work with 4.0
+  - pip install pytest
+  - pip install pytest-cov
+  - pip install codeclimate-test-reporter
+
 
 script:
   - export PYTHONPATH=src
-  - python -m unittest discover -s test
+  - pytest --cov=src test
+
+after_success:
+  - codeclimate-test-reporter --file .coverage
