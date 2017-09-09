@@ -2,6 +2,9 @@
 # PDF_duplex_scan_reorderer
 
 [![Build Status](https://travis-ci.org/Tomok/PDF_duplex_scan_reorderer.svg?branch=master)](https://travis-ci.org/Tomok/PDF_duplex_scan_reorderer)
+[![Code Climate](https://codeclimate.com/github/Tomok/PDF_duplex_scan_reorderer/badges/gpa.svg)](https://codeclimate.com/github/Tomok/PDF_duplex_scan_reorderer)
+[![Test Coverage](https://codeclimate.com/github/Tomok/PDF_duplex_scan_reorderer/badges/coverage.svg)](https://codeclimate.com/github/Tomok/PDF_duplex_scan_reorderer/coverage)
+[![Issue Count](https://codeclimate.com/github/Tomok/PDF_duplex_scan_reorderer/badges/issue_count.svg)](https://codeclimate.com/github/Tomok/PDF_duplex_scan_reorderer)
 
 A simple python script to reorder pages in a scanned PDF to help with scanners
 that do not natively support duplex scanning
