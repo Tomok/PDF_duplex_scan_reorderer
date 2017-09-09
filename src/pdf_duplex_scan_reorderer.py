@@ -61,7 +61,7 @@ def reorder_pdf(input_filename: str, output_filename: str):
 def parse_args(args=None):
     import argparse
     parser = argparse.ArgumentParser(description="""
-        Reorders pages in a PDF: 
+        Reorders pages in a PDF:
             it assumes you scanned front pages first and than the back pages in inverse order
             (as you would if you just flipped the stack of paper).
 
