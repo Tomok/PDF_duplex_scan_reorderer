@@ -16,5 +16,6 @@ engines:
 ratings:
   paths:
   - "**.py"
+  - "**.md"
 exclude_paths:
 - test/
